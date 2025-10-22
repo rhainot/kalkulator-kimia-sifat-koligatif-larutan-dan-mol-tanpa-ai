@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kalkulator Kimia</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      margin: 50px;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+      display: inline-block;
+      width: 400px;
+    }
+    select, input {
+      margin: 10px;
+      padding: 8px;
+      width: 90%;
+    }
+    button {
+      margin: 15px;
+      padding: 10px 20px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .hasil {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Kalkulator Kimia Sifat Koligatif Larutan Dan Mol</h2>
+    <label for="rumus">Pilih Rumus:</label>
+    <select id="rumus" onchange="tampilkanInput()">
+      <option value="">-- Pilih Rumus --</option>
+      <option value="molaritas">Molaritas (M = n / V)</option>
+      <option value="kenaikanTitikDidih">Kenaikan Titik Didih (ΔTb = Kb · m · i)</option>
+      <option value="penurunanTitikBeku">Penurunan Titik Beku (ΔTf = Kf · m · i)</option>
+      <option value="tekananOsmotik">Tekanan Osmotik (π = M · R · T · i)</option>
+      <option value="penurunanTekananUap">Penurunan Tekanan Uap (ΔP = Xpelarut · Po)</option>
+      <option value="penurunanTekananUapElektrolit">Penurunan Tekanan Uap Elektrolit (ΔP = Xpelarut · Po · i)</option>
+      <option value="kenaikanTitikDidihNonElektrolit">Kenaikan Titik DIdih Non Elektrolit (ΔTb = Kb · m)</option>
+      <option value="penurunanTitikBekuNonElektrolit">Penurunan Titik Beku Non Elektrolit (ΔTf = Kf · m)</option>
+      <option value="jumlahMol">Jumlah Mol (n = g / mr)</option>
+      <option value="Molalitas">Molalitas (m = n / p)</option>
+
+      
+    </select>
+
+    <div id="inputForm"></div>
+
+    <button onclick="hitung()">Hitung</button>
+
+    <div class="hasil" id="output"></div>
+  </div>
+
+  <script>
+    function tampilkanInput() {
+      let rumus = document.getElementById("rumus").value;
+      let form = "";
+
+      if (rumus === "molaritas") {
+        form = `
+          Jumlah mol zat terlarut (n, mol): <input type="number" id="n"><br>
+          Volume larutan (V, L): <input type="number" id="V"><br>
+        `;
+      }
+      else if (rumus === "kenaikanTitikDidih") {
+        form = `
+          Tetapan didih (Kb): <input type="number" id="Kb"><br>
+          Molalitas (m, mol/kg): <input type="number" id="m"><br>
+          Faktor van't Hoff (i): <input type="number" id="i"><br>
+        `;
+      }
+      else if (rumus === "penurunanTitikBeku") {
+        form = `
+          Tetapan beku (Kf): <input type="number" id="Kf"><br>
+          Molalitas (m, mol/kg): <input type="number" id="m"><br>
+          Faktor van't Hoff (i): <input type="number" id="i"><br>
+        `;
+      }
+      else if (rumus === "tekananOsmotik") {
+        form = `
+          Molaritas (M, mol/L): <input type="number" id="M"><br>
+          Tetapan gas (R, 0.082 L·atm/mol·K): <input type="number" id="R" value="0.082"><br>
+          Suhu mutlak (T, K): <input type="number" id="T"><br>
+          Faktor van't Hoff (i): <input type="number" id="i"><br>
+        `;
+      }
+      else if (rumus === "penurunanTekananUap") {
+        form = `
+          Fraksi mol pelarut (Xpelarut): <input type="number" id="X"><br>
+          Tekanan uap murni (Po): <input type="number" id="Po"><br>
+        `;
+      }
+       else if (rumus === "penurunanTekananUapElektrolit") {
+        form = `
+          Fraksi mol pelarut (Xpelarut): <input type="number" id="X"><br>
+          Tekanan uap murni (Po): <input type="number" id="Po"><br>
+          Faktor van't hoff (i): <input type="number" id="i"><br>
+        `;
+      }
+       else if (rumus === "kenaikanTitikDidihNonElektrolit"){
+        form = `
+         Tetapan didih (Kb): <input type="number" id="Kb"><br>
+         Molalitas (m, mol/kg): <input type="number" id="m"><br>
+        `;
+       }
+       else if (rumus === "penurunanTitikBekuNonElektrolit") {
+        form = `
+          Tetapan beku (Kf): <input type="number" id="Kf"><br>
+          Molalitas (m, mol/kg): <input type="number" id="m"><br>
+        `;
+       }
+       else if (rumus ==="jumlahMol") {
+        form = `
+          gram (g): <input type="number" id="g"><br>
+          molaritas (mr): <input type="number"id="mr"><br>
+        `;
+       }
+       else if (rumus === "Molalitas"){
+        form = `
+          jumlah mol (n): <input type="number" id="n"><br>
+          massa pelarut (p): <input type="number" id="p"><br>
+        `;
+       }
+      else if (""){}
+      document.getElementById("inputForm").innerHTML = form;
+      document.getElementById("output").innerHTML = "";
+    }
+
+    function hitung() {
+      let rumus = document.getElementById("rumus").value;
+      let hasil = "";
+
+      if (rumus === "molaritas") {
+        let n = parseFloat(document.getElementById("n").value);
+        let V = parseFloat(document.getElementById("V").value);
+        hasil = "Molaritas = " + (n / V).toFixed(3) + " M";
+      }
+      else if (rumus === "kenaikanTitikDidih") {
+        let Kb = parseFloat(document.getElementById("Kb").value);
+        let m = parseFloat(document.getElementById("m").value);
+        let i = parseFloat(document.getElementById("i").value);
+        hasil = "ΔTb = " + (Kb * m * i).toFixed(3) + " °C";
+      }
+      else if (rumus === "penurunanTitikBeku") {
+        let Kf = parseFloat(document.getElementById("Kf").value);
+        let m = parseFloat(document.getElementById("m").value);
+        let i = parseFloat(document.getElementById("i").value);
+        hasil = "ΔTf = " + (Kf * m * i).toFixed(3) + " °C";
+      }
+      else if (rumus === "tekananOsmotik") {
+        let M = parseFloat(document.getElementById("M").value);
+        let R = parseFloat(document.getElementById("R").value);
+        let T = parseFloat(document.getElementById("T").value);
+        let i = parseFloat(document.getElementById("i").value);
+        hasil = "Tekanan Osmotik = " + (M * R * T * i).toFixed(3) + " atm";
+      }
+      else if (rumus === "penurunanTekananUap") {
+        let X = parseFloat(document.getElementById("X").value);
+        let Po = parseFloat(document.getElementById("Po").value);
+        hasil = "ΔP = " + (X * Po).toFixed(3) + " atm";
+      }
+      else if (rumus === "penurunanTekananUapElektrolit") {
+        let X = parseFloat(document.getElementById("X").value);
+        let Po = parseFloat(document.getElementById("Po").value);
+        let i = parseFloat(document.getElementById("i").value);
+        hasil = "ΔP = " + (X * Po * i).toFixed(3) + " atm";
+      }
+      else if (rumus === "kenaikanTitikDidihNonElektrolit"){
+        let Kb = parseFloat(document.getElementById("Kb").value);
+        let m = parseFloat(document.getElementById("m").value);
+        hasil = "ΔTb = " + (Kb * m).toFixed(3) + " °C";
+      }
+      else if (rumus === "penurunanTitikBekuNonElektrolit") {
+        let Kf = parseFloat(document.getElementById("Kf").value);
+        let m = parseFloat(document.getElementById("m").value);
+        hasil = "ΔTf = " + (Kf * m).toFixed(3) + " °C";
+      }
+      else if (rumus === "jumlahMol"){
+       let g = parseFloat(document.getElementById("g").value);
+       let mr = parseFloat(document.getElementById("mr").value);
+       hasil = "n = " + (g / mr).toFixed(3) + " m";
+      }
+      else if (rumus === "Molalitas"){
+        let n = parseFloat(document.getElementById("n").value);
+        let p = parseFloat(document.getElementById("p").value);
+        hasil = "M = " + (n / p).toFixed(3) + " molal";
+      }
+      else {
+        hasil = "Pilih rumus terlebih dahulu!";
+      }
+
+      document.getElementById("output").innerHTML = hasil;
+    }
+  </script>
+</body>
+</html>
